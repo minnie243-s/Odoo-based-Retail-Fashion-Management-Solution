@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        STEP 6: Skeleton view extension for Sale Quick Checkout.
+
+        Goal:
+        - Add a read-only "Available Qty" column on Sales Order lines.
+        - Do NOT change business logic yet (no stock computation).
+
+        We inherit the main Sale Order form view:
+            external id: sale.view_order_form
+        You can verify this in Developer Mode:
+            - Open a Sales Order
+            - Debug menu (bug icon) -> Edit View: Form
+            - Check the External ID field.
+    -->
+
+    <record id="view_order_form_sale_quick_checkout" model="ir.ui.view">
+        <field name="name">sale.order.form.sale.quick.checkout</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">30</field>
+        <field name="arch" type="xml">
+
+            <!-- Khóa ngày đơn hàng (Quotation Date / Order Date) cho sale staff -->
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+            <!-- Ẩn Expiration (validity_date) vì bán lẻ tại quầy không dùng -->
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!--
+                Insert the Available Qty column into the Sales Order Lines list.
+                Product | Qty | In Stock | Unit Price | Subtotal ...
+            -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
+                <field
+                    name="available_qty"
+                    string="In Stock"
+                    readonly="1"
+                    optional="show"
+                />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
+
+

@@ -177,3 +177,4 @@ Dự án sử dụng **LGPL-3**. Xem file [LICENSE](LICENSE) nếu có.
 **Made with ❤️ – Odoo-based Retail Fashion Management Solution**
 
 </div>
+# Odoo-based-Retail-Fashion-Management-Solution

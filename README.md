@@ -127,7 +127,6 @@
 ### Lưu ý
 
 - **Sale Quick Checkout** tính tồn theo warehouse của đơn hàng (hoặc warehouse mặc định của công ty). Đảm bảo sản phẩm và kho đã cấu hình đúng.
-- Dòng **dịch vụ** không kiểm tra tồn kho.
 
 ---
 

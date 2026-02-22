@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Lean Sales Order form for Sales Staff in project GR2:
+         - Keep: Customer, Order Date, State, Totals, basic order lines
+         - Hide: pricing tools, marketing, analytic, taxes, packaging, extra tabs for non-managers
+    -->
+    <record id="view_order_form_lean_ui" model="ir.ui.view">
+        <field name="name">sale.order.form.lean.ui</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+
+            <!-- A) HEADER / TOP: hide pricelist & advanced pricing from non-managers -->
+            <xpath expr="//label[@for='pricelist_id']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='pricelist_id' and not(@invisible)]" position="replace">
+                <field name="pricelist_id"
+                       options="{'no_open':True,'no_create': True}"
+                       readonly="state in ['cancel', 'sale']"
+                       groups="sales_team.group_sale_manager"/>
+            </xpath>
+
+            <!-- B) TABS: hide 'Other Info' for sales staff, only managers see it -->
+            <xpath expr="//page[@name='other_information']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+
+            <!-- C) ORDER LINES: simplify tree view for sales staff -->
+
+            <!-- Hide free-text description column -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='name']" position="replace">
+                <field name="name"
+                       widget="sol_text"
+                       optional="hide"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide analytic distribution column (not used in project scope) -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='analytic_distribution']" position="replace">
+                <field name="analytic_distribution"
+                       widget="analytic_distribution"
+                       optional="hide"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide delivered / invoiced quantity columns (system will handle logistics later) -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_delivered']" position="replace">
+                <field name="qty_delivered"
+                       string="Delivered"
+                       column_invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_invoiced']" position="replace">
+                <field name="qty_invoiced"
+                       string="Invoiced"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide UoM column (fixed unit for this project) -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom']" position="replace">
+                <field name="product_uom"
+                       string="UoM"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide customer lead / delivery lead time -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='customer_lead']" position="replace">
+                <field name="customer_lead"
+                       optional="hide"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide packaging fields -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_packaging_qty']" position="replace">
+                <field name="product_packaging_qty"
+                       column_invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_packaging_id']" position="replace">
+                <field name="product_packaging_id"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide discount column (no line-level discount in basic flow) -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="replace">
+                <field name="discount"
+                       string="Disc.%"
+                       column_invisible="1"/>
+            </xpath>
+
+            <!-- Hide tax column (no VAT/Taxes in project scope) -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='tax_id']" position="replace">
+                <field name="tax_id"
+                       widget="many2many_tags"
+                       optional="hide"
+                       column_invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
+
+

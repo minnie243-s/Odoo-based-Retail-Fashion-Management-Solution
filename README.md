@@ -1,7 +1,7 @@
 # 🛒 Odoo-based Retail Fashion Management Solution
 
 <div align="center">
-
+<img width="800" alt="Odoo Retail Fashion" src="https://github.com/user-attachments/assets/f54ee51d-73af-4da8-b2a3-e3d9d9210458" />
 **Bộ addon Odoo 18 cho bán lẻ thời trang – Giao diện gọn, Kiểm tra tồn kho, Quick checkout**
 
 [![Odoo](https://img.shields.io/badge/Odoo-18.0-875A7B?style=flat&logo=odoo)](https://www.odoo.com/)
@@ -162,7 +162,7 @@ codenew/
 
 ## 📄 License
 
-Dự án sử dụng **LGPL-3**. Xem file [LICENSE](LICENSE) nếu có.
+Dự án sử dụng **LGPL-3**
 
 ---
 
